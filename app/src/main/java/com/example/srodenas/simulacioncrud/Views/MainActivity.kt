@@ -51,15 +51,12 @@ class MainActivity : AppCompatActivity(){
             myDialog.show(0)  //mostramos el dialogo que me permite la inserción de datos en los campos de edición.
         }
 
-        myButtonUpdate.setOnClickListener{
-            myDialog.show(1)  //mostramos el dialogo que me permite la edición de datos en los campos de edición.
-
+        myButtonUpdate.setOnClickListener {
+            myDialog.show(1, controller.devIdRandom())
         }
-
-        myButtonDel.setOnClickListener( {
-            myDialog.show(2)  //mostramos el dialogo que me permite la eliminación de datos en los campos de edición.
-
-        })
+        myButtonDel.setOnClickListener {
+            myDialog.show(2, controller.devIdRandom())
+        }
 
 
     }
