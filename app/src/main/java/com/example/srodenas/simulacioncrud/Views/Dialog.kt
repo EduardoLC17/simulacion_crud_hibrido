@@ -5,36 +5,28 @@ import com.example.srodenas.simulacioncrud.Logic.Controller
 import com.example.srodenas.simulacioncrud.Logic.interfaces.OperationsInterface
 import com.google.android.material.animation.AnimatableView.Listener
 
-//simulo un diálogo.
-class Dialog(var controller: Controller) {
-    private var listener: OperationsInterface? = null  //Ya si eso lo creo.
+//simulo un diálogo. Ya no recibe el Controller.
+class Dialog {
+    private var listener: OperationsInterface? = null
 
-    private var action : Int = 0
-
-    //Carga el listener para el botón
     fun setListener ( _listener : OperationsInterface){
         listener = _listener
-
     }
 
-    //muestra el dialogo
-    fun show(typeAction : Int){
+    //la pantalla me pasa el id ya elegido (-1 si no hay clientes) para editar/borrar
+    fun show(typeAction : Int, id : Int = -1){
         listener?.let{
-            val posibleName = "CAMBIADO"
-            val posibleId = controller.devIdRandom() //me da un aleatorio. -1 está vacío para editar/borrar.
             when (typeAction){
-                0 -> onAccept() //simulamos que ahora pulsamos el botón aceptar de un nuevo
+                0 -> onAccept()
 
                 1 ->
-                    if (posibleId != -1)
-                        onEdit(posibleId, "CAMBIADO")
+                    if (id != -1)
+                        onEdit(id, "CAMBIADO", "APELLIDOS CAMBIADOS", "611111111")
 
                 2 ->
-                    if (posibleId != -1)
-                        onDelete(posibleId)
-
+                    if (id != -1)
+                        onDelete(id)
             }
-
         }
     }
 
@@ -42,12 +34,11 @@ class Dialog(var controller: Controller) {
         listener!!.ClientDel(id)
     }
 
-    private fun onEdit(id: Int, name : String) {
-        listener!!.ClientUpdate(id, name)
+    private fun onEdit(id: Int, name : String, apellidos : String, telefono : String) {
+        listener!!.ClientUpdate(id, name, apellidos, telefono)
     }
 
-    //simula el pulsado del botón aceptar del dialogo. Este recoge los datos del usuario.
     private fun onAccept() {
-        listener!!.ClientAdd(RepositoryClient.incrementPrimary(), "NUEVO CLIENTE")
+        listener!!.ClientAdd(RepositoryClient.incrementPrimary(), "NUEVO CLIENTE", "NUEVOS APELLIDOS", "622222222")
     }
 }
