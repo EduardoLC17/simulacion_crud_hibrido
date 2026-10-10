@@ -9,10 +9,10 @@ class RepositoryClient {
         var primary = 100
 
         val arrayClient : List<Client> = listOf (
-            Client (RepositoryClient.incrementPrimary(), "Santi"),
-            Client (RepositoryClient.incrementPrimary(), "Sonia"),
-            Client (RepositoryClient.incrementPrimary(), "Guille"),
-            Client (RepositoryClient.incrementPrimary(), "Diego")
+            Client (RepositoryClient.incrementPrimary(), "Santi", "Garcia Lopez", "600111222"),
+            Client (RepositoryClient.incrementPrimary(), "Sonia", "Ruiz Perez", "600333444"),
+            Client (RepositoryClient.incrementPrimary(), "Guille", "Moreno Diaz", "600555666"),
+            Client (RepositoryClient.incrementPrimary(), "Diego", "Torres Gil", "600777888")
         )
 
         fun incrementPrimary() = primary ++ //devuelvo la clave e incremento.

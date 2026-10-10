@@ -37,16 +37,12 @@ class MainActivity : AppCompatActivity(){
         myButtonAdd = findViewById(R.id.myButtonAdd)   //Recuperamos la referencia en memoria del botón de la interfaz.
         myButtonUpdate = findViewById(R.id.myButtomEdit)
         myButtonDel = findViewById(R.id.myButtomDel)
-        myDialog = Dialog(controller,
-            { id, name ->
-                clientAdd(id, name)
-            },
-            { id, name ->
-                clientUpdate(id, name)
-            },
-            { id ->
-                clientDel(id)
-            })
+        myDialog = Dialog(
+            { id, name, apellidos, telefono -> clientAdd(id, name, apellidos, telefono) },
+            { id, name, apellidos, telefono -> clientUpdate(id, name, apellidos, telefono) },
+            { id -> clientDel(id) }
+        )
+
 
 
 
@@ -69,13 +65,10 @@ class MainActivity : AppCompatActivity(){
     }
 
 
-    fun clientAdd(id: Int, name: String){
-        val newClient = Client (id, name)
-        controller.ClientAddController(newClient)
-        var msg =  "El cliente con id = $id, ha sido insertado correctamente"
-
-        Log.d(TAG, msg)
-        showConsoleData(msg)
+    fun clientAdd(id: Int, name: String, apellidos: String, telefono: String) {
+        controller.ClientAddController(Client(id, name, apellidos, telefono))
+        Log.d(TAG, "El cliente con id = $id, ha sido insertado correctamente")
+        showConsoleData()
     }
 
     fun clientDel(id: Int) {
@@ -88,29 +81,21 @@ class MainActivity : AppCompatActivity(){
             msg = "El cliente con id = $id, no ha sido encontrado para eliminar"
 
         Log. d(TAG, msg)
-        showConsoleData(msg)
+        showConsoleData()
 
     }
 
 
 
-    fun clientUpdate(id: Int, name: String) {
-        var msg = ""
-        val update = controller.ClientUpdateController(id, name)  //borramos el 2.
-
-        if (update)
-            msg =  "El cliente con id = $id, ha sido actualizado correctamente"
+    fun clientUpdate(id: Int, name: String, apellidos: String, telefono: String) {
+        if (controller.ClientUpdateController(id, name, apellidos, telefono))
+            Log.d(TAG, "El cliente con id = $id, ha sido actualizado correctamente")
         else
-            msg = "El cliente con id = $id, no ha sido encontrado para actualizar"
-
-        Log. d(TAG, msg)
-        showConsoleData(msg)
-
+            Log.d(TAG, "El cliente con id = $id, no ha sido encontrado para actualizar")
+        showConsoleData()
     }
 
-    fun showConsoleData(msg:String){
-        val msg = controller.showData()
-        Thread.sleep(2000)
-        Log. d(TAG, msg)
+    fun showConsoleData() {
+        Log.d(TAG, controller.showData())
     }
 }
